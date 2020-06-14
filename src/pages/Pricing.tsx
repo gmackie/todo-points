@@ -103,35 +103,15 @@ const tiers: Tier[] = [
     buttonVariant: 'outlined',
   },
 ];
-const footers = [
-  {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'Features',
-    description: ['Cool stuff', 'Random feature', 'Team feature', 'Developer stuff', 'Another one'],
-  },
-  {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-  },
-  {
-    title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
-  },
-];
 
 interface PricingProps {
   title: string;
   copy: string;
-  tiers: Tier[];
 }
 
 export default function Pricing(props: PricingProps) {
   const classes = useStyles();
-  const { title, copy, tiers } = props;
-
+  const { title, copy } = props;
   return (
     <React.Fragment>
       {/* Hero unit */}

@@ -9,6 +9,8 @@ import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
 import Orders from '../components/Orders';
 import Copyright from '../components/Copyright';
+import { useUsername } from '../contexts/AuthTokenContext';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -28,10 +30,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+  const username = useUsername();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <Container maxWidth="lg" className={classes.container}>
+      {!username && <Redirect to="/sign_in" />}
       <Grid container spacing={3}>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>

@@ -62,7 +62,7 @@ export default function MyAppBar(props: MyAppBarProps) {
         })}
       >
         <Toolbar>
-          {handleDrawerOpen && 
+          {handleDrawerOpen && loggedIn &&
             <IconButton
               color="inherit"
               aria-label="open drawer"
