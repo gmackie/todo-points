@@ -104,9 +104,11 @@ export default function MyAppBar(props: MyAppBarProps) {
               </Link>
             </nav>
           :
-            <Button href="/signin" color="primary" variant="outlined" className={classes.link}>
-              Login
-            </Button>
+            <nav>
+              <Link href="/sign_in" color="textPrimary" className={classes.link}>
+                Login
+              </Link>
+            </nav>
           }
         </Toolbar>
       </AppBar>
