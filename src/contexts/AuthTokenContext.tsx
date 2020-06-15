@@ -1,10 +1,14 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, Dispatch } from 'react';
 import jwt_decode from 'jwt-decode';
 
 interface AuthTokenContextProviderProps {
   children?: React.ReactNode;
 }
 
+interface AuthTokenContext {
+  authToken: string | null;
+  setAuthToken: Dispatch<string | null>;
+}
 interface JWTPayload {
   iat: number;
   exp: number;
@@ -12,48 +16,50 @@ interface JWTPayload {
   login_session: string;
 }
 
-const setAuthTokenDummy = (value: React.SetStateAction<string | undefined>): void => {
-  //noop
-  Boolean(value);
-};
-
-interface IAuthTokenContext {
-  authToken?: string;
-  setAuthToken: React.Dispatch<React.SetStateAction<string | undefined>>;
-}
-
-const dummyContext: IAuthTokenContext = {
-  authToken: undefined,
-  setAuthToken: setAuthTokenDummy,
-}
-const AuthTokenContext: React.Context<IAuthTokenContext> = createContext(dummyContext);
-
-export function AuthTokenContextProvider(props: AuthTokenContextProviderProps) {
-  const { children } = props;
-  const [authToken, setAuthToken] = useState<string>();
-  const authContext: IAuthTokenContext = {
-    authToken,
-    setAuthToken,
+let reducer = (_authToken: string | null, newAuthToken: string | null) => {
+  if (newAuthToken === null) {
+    localStorage.removeItem("todo-points-auth");
   }
-  return <AuthTokenContext.Provider value={authContext}>{children}</AuthTokenContext.Provider>
-
+  return newAuthToken;
 }
 
-export function useAuthToken(): string | undefined {
-  const { authToken } = useContext(AuthTokenContext);
-  return authToken;
+const initialState: AuthTokenContext = {
+  authToken: null,
+  setAuthToken: (s: string | null) => {},
+};
+const localState = localStorage.getItem("todo-points-auth");
+const AuthTokenContext = createContext<AuthTokenContext>(initialState);
+function AuthTokenContextProvider(props: AuthTokenContextProviderProps) {
+  const [authToken, setAuthToken] = useReducer(reducer, localState);
+  const { children } = props;
+  useEffect(() => {
+    if (!authToken) {
+      return;
+    }
+    localStorage.setItem("todo-points-auth", authToken);
+  }, [authToken]);
+
+  return (
+    <AuthTokenContext.Provider value={{ authToken, setAuthToken }}>
+      {children}
+    </AuthTokenContext.Provider>
+  );
 }
 
-export function useUsername(): string | undefined {
+function useSetAuthToken(): Dispatch<string | null> {
+  const { setAuthToken } = useContext(AuthTokenContext);
+  return setAuthToken;
+}
+
+function useUsername(): string | undefined {
   const { authToken } = useContext(AuthTokenContext);
-  if (!authToken) {
+  console.log(authToken === "")
+  if ((!authToken) || (authToken === "")) {
     return undefined;
   }
+  console.log(authToken);
   const { user } = jwt_decode<JWTPayload>(authToken);
   return user;
 }
 
-export function useSetAuthToken(): React.Dispatch<React.SetStateAction<string | undefined>> {
-  const { setAuthToken } = useContext(AuthTokenContext);
-  return setAuthToken;
-}
+export { AuthTokenContextProvider, useSetAuthToken, useUsername };

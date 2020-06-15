@@ -9,8 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Axios from 'axios';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -65,7 +69,15 @@ export default function SignUp() {
     Axios
       .post("/api/auth/signup", data)
       .then((res: any) => {
-        
+        enqueueSnackbar("Sign Up Successfull! Now you can login", {
+          variant: 'success',
+        });
+        history.push('/sign_in');
+      })
+      .catch((e: Error) => {
+        enqueueSnackbar(`Error: ${e.name}: ${e.message}`, {
+          variant: 'error',
+        });
       })
   }
 

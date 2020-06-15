@@ -16,6 +16,7 @@ import Copyright from '../components/Copyright';
 import axios from 'axios';
 import { useSetAuthToken } from '../contexts/AuthTokenContext';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,7 @@ export default function SignIn() {
   const classes = useStyles();
   const setAuthToken = useSetAuthToken();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [username_or_email, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const onUserEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -71,9 +73,16 @@ export default function SignIn() {
     axios
       .post("/api/auth/login", data)
       .then((res: any) => {
+        enqueueSnackbar("Login Success!", {
+          variant: 'success',
+        });
         setAuthToken(res.data.data.token);
-        console.log(res.data.data.token);
         history.push("/");
+      })
+      .catch((e: Error) => {
+        enqueueSnackbar(`Error: ${e.name}: ${e.message}`, {
+          variant: 'error',
+        });
       })
   }
 

@@ -10,6 +10,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
+import { useUsername, useSetAuthToken } from '../contexts/AuthTokenContext';
+import { useSnackbar } from 'notistack';
 
 const drawerWidth = 240;
 
@@ -53,6 +56,19 @@ interface MyAppBarProps {
 
 export default function MyAppBar(props: MyAppBarProps) {
   const classes = useStyles();
+  const username = useUsername();
+  const setAuthToken = useSetAuthToken();
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const logout = () => {
+    enqueueSnackbar('You have been signed out', {
+      variant: 'info',
+    })
+    setAuthToken(null);    
+    history.push('/sign_in');
+  };
+
   const { handleDrawerOpen, loggedIn, open, title } = props;
   return (
       <AppBar
@@ -81,17 +97,14 @@ export default function MyAppBar(props: MyAppBarProps) {
           {loggedIn ? 
             <nav>
               <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                Features
+                {username}
               </Link>
-              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                Enterprise
-              </Link>
-              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                Support
+              <Link variant="button" color="textPrimary" onClick={logout} className={classes.link}>
+                Logout
               </Link>
             </nav>
           :
-            <Button href="#" color="primary" variant="outlined" className={classes.link}>
+            <Button href="/signin" color="primary" variant="outlined" className={classes.link}>
               Login
             </Button>
           }

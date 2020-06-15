@@ -5,14 +5,17 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import App from './App';
 import theme from './theme';
 import { AuthTokenContextProvider } from './contexts/AuthTokenContext';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.render(
-  <AuthTokenContextProvider>
-    <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </AuthTokenContextProvider>,
+  <SnackbarProvider maxSnack={3}>
+    <AuthTokenContextProvider>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </AuthTokenContextProvider>
+  </SnackbarProvider>,
   document.querySelector('#root'),
 );
