@@ -1,10 +1,10 @@
 
 import React from 'react';
-import Dashboard from './pages/Dashboard';
+import Tasks from './pages/Tasks';
 import SignIn from './pages/SignIn';
 import Pricing from './pages/Pricing';
 import SignUp from './pages/SignUp';
-import Footer from './components/Footer';
+import Copyright from './components/Copyright';
 import { 
   BrowserRouter as Router, 
   Switch, 
@@ -23,7 +23,7 @@ export default function App() {
         <SideBarLayout title={title}>
           <Switch>
             <Route path="/tasks">
-              <Dashboard />
+              <Tasks />
             </Route>
             <Route path="/sign_up">
               <SignUp/>
@@ -38,6 +38,7 @@ export default function App() {
               <Home />
             </Route>
           </Switch>
+          <Copyright />
         </SideBarLayout>
       </Router>
  );

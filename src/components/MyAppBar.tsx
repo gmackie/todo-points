@@ -9,7 +9,6 @@ import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from '@material-ui/core/Link';
-import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { useUsername, useSetAuthToken } from '../contexts/AuthTokenContext';
 import { useSnackbar } from 'notistack';
@@ -98,6 +97,11 @@ export default function MyAppBar(props: MyAppBarProps) {
             <nav>
               <Link variant="button" color="textPrimary" href="#" className={classes.link}>
                 {username}
+              </Link>
+              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                <Badge badgeContent={"15+"} color="error">
+                  <NotificationsIcon />
+                </Badge>
               </Link>
               <Link variant="button" color="textPrimary" onClick={logout} className={classes.link}>
                 Logout

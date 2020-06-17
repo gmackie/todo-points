@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Menu from '../components/Menu';
 import MyAppBar from '../components/MyAppBar';
 import { useUsername } from '../contexts/AuthTokenContext';

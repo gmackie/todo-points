@@ -7,11 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
 import Copyright from '../components/Copyright';
 import Pricing from './Pricing';
 import { useUsername } from '../contexts/AuthTokenContext';
-import { Redirect, useHistory } from 'react-router-dom';
+import Table from '../components/TaskTable';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -55,7 +54,7 @@ export default function Home() {
           {/* Recent Orders */}
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Orders />
+              <Table />
             </Paper>
           </Grid>
         </Grid>
