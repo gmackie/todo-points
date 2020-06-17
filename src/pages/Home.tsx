@@ -1,13 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
-import Copyright from '../components/Copyright';
 import Pricing from './Pricing';
 import { useUsername } from '../contexts/AuthTokenContext';
 import Table from '../components/TaskTable';
@@ -58,9 +56,6 @@ export default function Home() {
             </Paper>
           </Grid>
         </Grid>
-        <Box pt={4}>
-          <Copyright />
-        </Box>
       </Container>
     :
       <Pricing title="Tasks. Gameified." copy="do things. get points. feel good. Need to replace this with a real home page."/>

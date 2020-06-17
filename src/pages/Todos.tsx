@@ -4,8 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Chart from '../components/Chart';
-import Table from '../components/TaskTable';
 import { useUsername } from '../contexts/AuthTokenContext';
 import { Redirect } from 'react-router-dom';
 
@@ -35,18 +33,9 @@ export default function Tasks() {
       {!username && <Redirect to="/sign_in" push/>}
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper>
-            
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={8} lg={9}>
-          <Paper >
-            <Table />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4} lg={3}>
           <Paper className={fixedHeightPaper}>
-            <Chart />
+            <h1>This is the todos page</h1>
+            <h3>Like tasks, but they are one-off in nature</h3>
           </Paper>
         </Grid>
       </Grid>

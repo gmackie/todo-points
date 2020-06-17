@@ -7,11 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import SettingsIcon from '@material-ui/icons/Settings';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from '@material-ui/core/Link';
 import { useHistory } from 'react-router-dom';
 import { useUsername, useSetAuthToken } from '../contexts/AuthTokenContext';
 import { useSnackbar } from 'notistack';
+import Avatar from '@material-ui/core/Avatar';
+import AppBarButton from './AppBarButton';
 
 const drawerWidth = 240;
 
@@ -36,13 +39,25 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     link: {
-      margin: theme.spacing(1, 1.5),
+      margin: theme.spacing(2.5, 1.5),
     },
     menuButton: {
       marginRight: 36,
     },
     hide: {
       display: 'none',
+    },
+        sectionDesktop: {
+      display: 'none',
+      [theme.breakpoints.up('md')]: {
+        display: 'flex',
+      },
+    },
+    sectionMobile: {
+      display: 'flex',
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
     },
 }));
 
@@ -94,19 +109,24 @@ export default function MyAppBar(props: MyAppBarProps) {
             {title}
           </Typography>
           {loggedIn ? 
-            <nav>
-              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                {username}
-              </Link>
-              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+            <div className={classes.sectionDesktop}>
+              <AppBarButton url="/profile">
+                <Badge badgeContent={"15+"} color="error">
+                  <Avatar alt={username} src="https://material-ui.com/static/images/avatar/1.jpg" />
+                </Badge>
+              </AppBarButton>
+              <AppBarButton >
                 <Badge badgeContent={"15+"} color="error">
                   <NotificationsIcon />
                 </Badge>
-              </Link>
+              </AppBarButton>
+              <AppBarButton>
+                <SettingsIcon />
+              </AppBarButton>
               <Link variant="button" color="textPrimary" onClick={logout} className={classes.link}>
                 Logout
               </Link>
-            </nav>
+            </div>
           :
             <nav>
               <Link href="/sign_in" color="textPrimary" className={classes.link}>

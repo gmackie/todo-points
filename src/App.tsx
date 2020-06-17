@@ -1,6 +1,8 @@
 
 import React from 'react';
 import Tasks from './pages/Tasks';
+import Todos from './pages/Todos';
+import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
 import Pricing from './pages/Pricing';
 import SignUp from './pages/SignUp';
@@ -13,6 +15,9 @@ import {
 import { useUsername } from './contexts/AuthTokenContext';
 import SideBarLayout from './layouts/SideBarLayout';
 import Home from './pages/Home';
+import Box from '@material-ui/core/Box';
+import Achievements from './pages/Achievements';
+import Labels from './pages/Labels';
 
 export default function App() {
   const title = 'Task Points'
@@ -34,11 +39,25 @@ export default function App() {
             <Route path="/pricing">
               <Pricing title="Tasks. Gameified." copy="do things. get points. feel good. now you really want to buy."/>
             </Route>
+            <Route path="/achievements">
+              <Achievements />
+            </Route>
+            <Route path="/profile">
+              <Profile/>
+            </Route>
+            <Route path="/labels">
+              <Labels />
+            </Route>
+            <Route path="/todos">
+              <Todos />
+            </Route>
             <Route path="/">
               <Home />
             </Route>
           </Switch>
-          <Copyright />
+          <Box pt={4}>
+            <Copyright />
+          </Box>
         </SideBarLayout>
       </Router>
  );

@@ -7,11 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import MenuItem, { MenuItemProps } from "./MenuItem";
 
 const drawerWidth = 240;
 
@@ -56,6 +52,46 @@ interface MenuProps {
 }
 
 export default function Menu(props: MenuProps) {
+  const topItems: MenuItemProps[] = [
+    {
+      icon: 'web',
+      text: "Dashboard",
+      url: "/",
+    },
+    {
+      icon: 'military_tech',
+      text: "Achievements",
+      url: "/achievements",
+    },
+    {
+      icon: 'mood',
+      text: "Stickers",
+      url: "/stickers",
+    },
+    {
+      icon: 'event_note',
+      text: "Tasks",
+      url: "/tasks",
+    },
+    {
+      icon: 'event_available',
+      text: "Todos",
+      url: "/todos",
+    },
+    {
+      icon: 'local_offer',
+      text: "Labels",
+      url: "/labels",
+    },
+  ];
+  const bottomItems: MenuItemProps[] = [
+    {
+      icon: 'settings',
+      text: "Settings",
+      url: "/profile",
+
+    }
+  ]
   const classes = useStyles();
   const theme = useTheme();
   const { handleDrawerClose, open } = props;
@@ -80,21 +116,15 @@ export default function Menu(props: MenuProps) {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          {
+            topItems.map((menuItem) => ( <MenuItem {...menuItem} />))
+          }
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          {
+            bottomItems.map((menuItem) => ( <MenuItem {...menuItem} />))
+          }
         </List>
       </Drawer>
   )
