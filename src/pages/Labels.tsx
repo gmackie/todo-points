@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { useUsername } from '../contexts/AuthTokenContext';
 import { Redirect } from 'react-router-dom';
+import LabelTable from '../components/LabelTable';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,8 +34,9 @@ export default function Tasks() {
       {!username && <Redirect to="/sign_in" push/>}
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper className={fixedHeightPaper}>
-            <h1>This is the labels page. For creating the labels to assign on tasks/todos</h1>
+          <Paper>
+            <h1>Labels</h1>
+            <LabelTable />
           </Paper>
         </Grid>
       </Grid>
