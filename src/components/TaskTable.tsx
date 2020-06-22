@@ -1,71 +1,50 @@
 import React from 'react';
-import MaterialTable, { Column } from 'material-table';
+import MaterialTable, { Column, Action } from 'material-table';
 
-interface Row {
+export interface Task {
+  id: number;
   description: string;
   points: number;
   user_id: number;
 }
 
-interface TableState {
-  columns: Array<Column<Row>>;
-  data: Row[];
+interface TaskTableProps {
+  title?: string;
+  columns?: Column<Task>[];
+  data: Task[];
+  actions?: Action<Task>[];
+  editable?: {
+    isEditable?: (task: Task) => boolean;
+    isDeletable?: (task: Task) => boolean;
+    onRowAdd?: (newTask: Task) => Promise<any>;
+    onRowUpdate?: (newTask: Task, oldTask?: Task) => Promise<any>;
+    onRowDelete?: (oldTask: Task) => Promise<any>;
+    editTooltip?: (task: Task) => string;
+    deleteTooltip?: (task: Task) => string;
+    onRowAddCancelled?: (task: Task) => void;
+    onRowUpdateCancelled?: (task: Task) => void;
+    isEditHidden?: (task: Task) => boolean;
+    isDeleteHidden?: (task: Task) => boolean;
+  }
 }
 
-export default function Table() {
-  const state: TableState = {
-    columns: [
-      { title: 'Descriptions', field: 'description' },
-      { title: 'Points', field: 'points', type: 'numeric' },
-    ],
-    data: [
-      {
-        description: 'Load Dishwasher',
-        points: 200,
-        user_id: 34
-      },
-      {
-        description: 'Unload Dishwasher',
-        points: 200,
-        user_id: 34
-      },
-      {
-        description: 'Vaccum Downstairs',
-        points: 200,
-        user_id: 34
-      },
-      {
-        description: 'Wipe Down Countertop',
-        points: 200,
-        user_id: 34
-      },
-      {
-        description: 'Swiffer Kitchen Floor',
-        points: 200,
-        user_id: 34
-      },
-      {
-        description: 'Take Out Trash',
-        points: 200,
-        user_id: 34
-      },
-    ],
-  };
+export default function TaskTable(props: TaskTableProps) {
+  const { columns, data, title, actions, editable } = props;
+  const mergedColumns = columns || [
+    { title: 'Descriptions', field: 'description' },
+    { title: 'Points', field: 'points', type: 'numeric' },
+  ];
 
   return (
     <MaterialTable
-      title="Tasks for User"
-      columns={state.columns}
-      data={state.data}
-      actions={[
-        {
-          icon: 'check',
-          tooltip: 'Complete Task',
-          onClick: (event, rowData) => {
-
-          }
-        }
-      ]}
+      title={title}
+      columns={mergedColumns}
+      data={data}
+      actions={actions}
+      editable={editable}
+      options={{
+        selection: true
+      }}
     />
   );
 }

@@ -51,15 +51,21 @@ function useSetAuthToken(): Dispatch<string | null> {
   return setAuthToken;
 }
 
-function useUsername(): string | undefined {
+function useAuthToken() : string | undefined {
   const { authToken } = useContext(AuthTokenContext);
-  console.log(authToken === "")
-  if ((!authToken) || (authToken === "")) {
+  if (!authToken || authToken === "") {
     return undefined;
   }
-  console.log(authToken);
+  return authToken;
+}
+
+function useUsername(): string | undefined {
+  const authToken = useAuthToken();
+  if (!authToken) {
+    return undefined;
+  }
   const { user } = jwt_decode<JWTPayload>(authToken);
   return user;
 }
 
-export { AuthTokenContextProvider, useSetAuthToken, useUsername };
+export { AuthTokenContextProvider, useSetAuthToken, useAuthToken, useUsername };

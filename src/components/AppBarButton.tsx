@@ -1,35 +1,59 @@
-import React, { ReactChild } from 'react';
-import { IconButton } from '@material-ui/core';
+import React from 'react';
+import { IconButton, Badge, Avatar, Icon } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 interface AppBarButtonProps {
+  avatarSrc?: string;
+  icon?: string;
+  badgeColor?: 'default' | 'error' | 'primary' | 'secondary';
+  count?: number;
+  maxCount?: number;
   url?: string;
-  onClick?(): void;
-  children?: ReactChild;
+  onClick?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
 export default function AppBarButton(props: AppBarButtonProps) {
-  const { url, onClick, children } = props;
+  const { avatarSrc, icon, badgeColor, count, maxCount, url, onClick} = props;
   
-  const CustomLink = (props: any) => {
-    return (<Link to={url} {...props}/>);
-  };
+  const Children = React.forwardRef((props: any, ref: any) => {
+    if (avatarSrc) {
+      if (icon) {
+        return <></>;
+      }
+      return <Avatar src={avatarSrc} ref={ref}/>
+    }
+    else if (icon) {
+      return (
+        <Icon fontSize="large" ref={ref}>
+          {icon}
+        </Icon>
+      )
+    }
+    return <></>;
+  });
+  const CustomLink = React.forwardRef((props: any, ref: any) => <Link to={url} {...props} ref={ref} />);
 
   return (
     <>
       {url ? 
         <IconButton component={CustomLink}>
-          {children}
+          <Badge badgeContent={count || 0} color={badgeColor} max={maxCount}>
+            <Children/>
+          </Badge> 
         </IconButton>
       :
         <>
           {onClick ?
             <IconButton onClick={onClick}>
-              {children}
+              <Badge badgeContent={count || 0} color={badgeColor} max={maxCount}>
+            <Children/>
+              </Badge> 
             </IconButton>
           :
             <IconButton>
-              {children}
+              <Badge badgeContent={count || 0} color={badgeColor} max={maxCount}>
+            <Children/>
+              </Badge> 
             </IconButton>
           }
         </>

@@ -43,7 +43,7 @@ export default function SideBarLayout(props: SideBarLayoutProps) {
 
   return (
     <div className={classes.root}>
-      <MyAppBar loggedIn={loggedIn} open={open} handleDrawerOpen={handleDrawerOpen} title={title} />
+      <MyAppBar open={open} handleDrawerOpen={handleDrawerOpen} title={title} />
       {loggedIn && <Menu open={open} handleDrawerClose={handleDrawerClose} />}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

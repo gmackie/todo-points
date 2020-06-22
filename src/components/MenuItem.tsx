@@ -9,17 +9,16 @@ export interface MenuItemProps {
   icon: string;
   text: string;
   url: string;
+  disabled?: boolean;
 }
 
 export default function MenuItem(props: MenuItemProps) {
-  const { icon, text, url } = props;
+  const { icon, text, url, disabled } = props;
 
-  const CustomLink = (props: any) => {
-    return (<Link to={url} {...props}/>);
-  };
+  const CustomLink = React.forwardRef((props: any, ref: any) => <Link to={url} {...props} ref={ref} />);
 
   return (
-    <ListItem button key={text} component={CustomLink}>
+    <ListItem button key={text} component={CustomLink} disabled={disabled}>
       <ListItemIcon><Icon>{icon}</Icon></ListItemIcon>
       <ListItemText primary={text} />
     </ListItem>

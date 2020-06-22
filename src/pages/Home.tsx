@@ -8,7 +8,8 @@ import Chart from '../components/Chart';
 import Deposits from '../components/Deposits';
 import Pricing from './Pricing';
 import { useUsername } from '../contexts/AuthTokenContext';
-import Table from '../components/TaskTable';
+import TaskTable, { Task } from '../components/TaskTable';
+import { Column } from 'material-table';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,6 +32,58 @@ export default function Home() {
   const username = useUsername();
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const title = "My Tasks";
+  const columns: Column<Task>[] =  [
+    { title: 'Descriptions', field: 'description' },
+    { title: 'Points', field: 'points', type: 'numeric' },
+  ];
+  const data = [
+      {
+        id: 1,
+        description: 'Load Dishwasher',
+        points: 200,
+        user_id: 34
+      },
+      {
+        id: 2,
+        description: 'Unload Dishwasher',
+        points: 200,
+        user_id: 34
+      },
+      {
+        id: 3,
+        description: 'Vaccum Downstairs',
+        points: 200,
+        user_id: 34
+      },
+      {
+        id: 4,
+        description: 'Wipe Down Countertop',
+        points: 200,
+        user_id: 34
+      },
+      {
+        id: 6,
+        description: 'Swiffer Kitchen Floor',
+        points: 200,
+        user_id: 34
+      },
+      {
+        id: 7,
+        description: 'Take Out Trash',
+        points: 200,
+        user_id: 34
+      },
+  ];
+  const actions = [
+    {
+      icon: 'check_circle',
+      tooltip: 'Complete Task',
+      onClick: (event: any, rowData: Task | Task[]) => {
+
+      }
+    }
+  ];
 
   return (
     <>
@@ -52,7 +105,7 @@ export default function Home() {
           {/* Recent Orders */}
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Table />
+              <TaskTable data={data} actions={actions} title={title} columns={columns} />
             </Paper>
           </Grid>
         </Grid>

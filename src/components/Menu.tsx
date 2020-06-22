@@ -67,9 +67,10 @@ export default function Menu(props: MenuProps) {
       icon: 'mood',
       text: "Stickers",
       url: "/stickers",
+      disabled: true,
     },
     {
-      icon: 'event_note',
+      icon: 'assignment_turned_in',
       text: "Tasks",
       url: "/tasks",
     },
@@ -117,13 +118,13 @@ export default function Menu(props: MenuProps) {
         <Divider />
         <List>
           {
-            topItems.map((menuItem) => ( <MenuItem {...menuItem} />))
+            topItems.map((menuItem) => ( <MenuItem {...menuItem} key={menuItem.text}/>))
           }
         </List>
         <Divider />
         <List>
           {
-            bottomItems.map((menuItem) => ( <MenuItem {...menuItem} />))
+            bottomItems.map((menuItem) => ( <MenuItem {...menuItem} key={menuItem.text}/>))
           }
         </List>
       </Drawer>

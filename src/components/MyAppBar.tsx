@@ -5,16 +5,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import SettingsIcon from '@material-ui/icons/Settings';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from '@material-ui/core/Link';
 import { useHistory } from 'react-router-dom';
 import { useUsername, useSetAuthToken } from '../contexts/AuthTokenContext';
 import { useSnackbar } from 'notistack';
-import Avatar from '@material-ui/core/Avatar';
 import AppBarButton from './AppBarButton';
+import { Popover } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -63,7 +60,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface MyAppBarProps {
   handleDrawerOpen?: MouseEventHandler;
-  loggedIn?: boolean;
   open?: boolean;
   title?: string;
 }
@@ -82,8 +78,20 @@ export default function MyAppBar(props: MyAppBarProps) {
     setAuthToken(null);    
     history.push('/sign_in');
   };
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
-  const { handleDrawerOpen, loggedIn, open, title } = props;
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('i click');
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const popoverOpen = Boolean(anchorEl);
+  const id = popoverOpen ? 'simple-popover' : undefined;
+  const { handleDrawerOpen, open, title } = props;
   return (
       <AppBar
         position="fixed"
@@ -92,7 +100,7 @@ export default function MyAppBar(props: MyAppBarProps) {
         })}
       >
         <Toolbar>
-          {handleDrawerOpen && loggedIn &&
+          {handleDrawerOpen && username &&
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -108,21 +116,27 @@ export default function MyAppBar(props: MyAppBarProps) {
           <Typography variant="h6" noWrap className={classes.toolbarTitle}>
             {title}
           </Typography>
-          {loggedIn ? 
+          {username ? 
             <div className={classes.sectionDesktop}>
-              <AppBarButton url="/profile">
-                <Badge badgeContent={"15+"} color="error">
-                  <Avatar alt={username} src="https://material-ui.com/static/images/avatar/1.jpg" />
-                </Badge>
-              </AppBarButton>
-              <AppBarButton >
-                <Badge badgeContent={"15+"} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </AppBarButton>
-              <AppBarButton>
-                <SettingsIcon />
-              </AppBarButton>
+              <AppBarButton url="/profile" avatarSrc="https://material-ui.com/static/images/avatar/1.jpg" />
+              <AppBarButton count={20} maxCount={15} badgeColor={'error'} icon="notifications" onClick={handleClick} />
+              <Popover
+                id={id}
+                open={popoverOpen}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+              >
+                <Typography>Contrary to popular belief</Typography>
+                <Typography>there are no new notifications... :(</Typography>
+              </Popover>
               <Link variant="button" color="textPrimary" onClick={logout} className={classes.link}>
                 Logout
               </Link>
