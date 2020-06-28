@@ -14,6 +14,7 @@ import { Column } from 'material-table';
 import FindTaskTable from '../components/FindTaskTable';
 import { Response } from './Labels';
 import useAxios from '../hooks/useAxios';
+import { isArray } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -80,25 +81,32 @@ export default function Tasks() {
     },
     { manual: true }
   );
+  const [{ data: completeData, loading: completeLoading, error: completeError }, completeTask] = useAxios()({
+      method: 'POST',
+    },
+    { manual: true }
+  );
 
   const data = (tasksData && tasksData.data) ? tasksData.data : [];
   const editable = {
     onRowAdd: (newTask: Task) => {
       const data = {
         description: newTask.description,
-        points: newTask.points,
-        user_id: username,
+        points: parseInt(newTask.points.toString()),
+        user_id: 1,
       };
       console.log(data)
       return addTask({
         data: data,
-      });
+      })
+      .then(() => refetchTasks());
     },
     onRowDelete: (oldTask: Task) => {
       const url = `/api/tasks/${oldTask.id}`;
       return deleteTask({
         url: url,
       })
+      .then(() => refetchTasks());
     },
   };
 
@@ -112,7 +120,14 @@ export default function Tasks() {
       icon: 'check_circle',
       tooltip: 'Complete Task',
       onClick: (event: any, rowData: Task | Task[]) => {
-
+        if (isArray(rowData)) {
+          return;
+        }
+        const url = `/api/tasks/${rowData.id}`;
+        completeTask({
+          url: url,
+        })
+        .then(() => refetchTasks());
       }
     }
   ];

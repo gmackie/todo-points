@@ -91,13 +91,15 @@ export default function Todos() {
       console.log(data)
       return addTodo({
         data: data,
-      });
+      })
+      .then(() => refetchTodos());
     },
     onRowDelete: (oldTodo: Todo) => {
       const url = `/api/todos/${oldTodo.id}`;
       return deleteTodo({
         url: url,
       })
+      .then(() => refetchTodos());
     },
   };
 

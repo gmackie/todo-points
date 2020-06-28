@@ -64,8 +64,13 @@ function useUsername(): string | undefined {
   if (!authToken) {
     return undefined;
   }
-  const { user } = jwt_decode<JWTPayload>(authToken);
-  return user;
+  const { user, exp } = jwt_decode<JWTPayload>(authToken);
+  if (exp > Math.floor(Date.now() / 1000)) {
+    return user;
+  }
+  else {
+    return undefined;
+  }
 }
 
 export { AuthTokenContextProvider, useSetAuthToken, useAuthToken, useUsername };

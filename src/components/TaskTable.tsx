@@ -1,11 +1,15 @@
 import React from 'react';
 import MaterialTable, { Column, Action } from 'material-table';
+import { Label } from './LabelTable';
+import { Chip, TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab'
 
 export interface Task {
   id: number;
   description: string;
   points: number;
   user_id: number;
+  labels: Label[];
 }
 
 interface TaskTableProps {
@@ -33,6 +37,17 @@ export default function TaskTable(props: TaskTableProps) {
   const mergedColumns = columns || [
     { title: 'Descriptions', field: 'description' },
     { title: 'Points', field: 'points', type: 'numeric' },
+    {
+      title: 'Labels',
+      field: 'labels',
+      render: (task) => {
+        return (
+          <>
+            {task.labels.map((label) => <Chip style={{backgroundColor: label.color}} label={label.name}/>)}
+          </>
+        )
+      },
+    }
   ];
 
   return (
@@ -43,7 +58,7 @@ export default function TaskTable(props: TaskTableProps) {
       actions={actions}
       editable={editable}
       options={{
-        selection: true
+        selection: false
       }}
     />
   );

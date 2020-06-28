@@ -37,44 +37,50 @@ export default function Home() {
     { title: 'Descriptions', field: 'description' },
     { title: 'Points', field: 'points', type: 'numeric' },
   ];
-  const data = [
+    const data = [
       {
         id: 1,
         description: 'Load Dishwasher',
         points: 200,
-        user_id: 34
+        user_id: 34,
+        labels: [],
       },
       {
         id: 2,
         description: 'Unload Dishwasher',
         points: 200,
-        user_id: 34
+        user_id: 34,
+        labels: [],
       },
       {
         id: 3,
         description: 'Vaccum Downstairs',
         points: 200,
-        user_id: 34
+        user_id: 34,
+        labels: [],
       },
       {
         id: 4,
         description: 'Wipe Down Countertop',
         points: 200,
-        user_id: 34
+        user_id: 34,
+        labels: [],
       },
       {
         id: 6,
         description: 'Swiffer Kitchen Floor',
         points: 200,
-        user_id: 34
+        user_id: 34,
+        labels: [],
       },
       {
         id: 7,
         description: 'Take Out Trash',
         points: 200,
-        user_id: 34
+        user_id: 34,
+        labels: [],
       },
-  ];
+    ];
   const actions = [
     {
       icon: 'check_circle',

@@ -8,6 +8,7 @@
     "@emotion/styled": "^10.0.27",
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@projectstorm/react-diagrams": "^6.0.1-beta.7",
     "axios": "^0.19.2",
     "axios-hooks": "^1.10.0",

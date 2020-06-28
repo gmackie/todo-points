@@ -69,13 +69,15 @@ export default function Tasks() {
       };
       return addLabel({
         data: data,
-      });
+      })
+      .then(() => refetchLabels());
     },
     onRowDelete: (oldLabel: Label) => {
       const url = `/api/labels/${oldLabel.id}`;
       return deleteLabel({
         url: url,
       })
+      .then(() => refetchLabels());
     },
   };
 
