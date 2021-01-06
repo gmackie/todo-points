@@ -10,7 +10,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@projectstorm/react-diagrams": "^6.0.1-beta.7",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axios-hooks": "^1.10.0",
     "closest": "^0.0.1",
     "dagre": "^0.8.5",
